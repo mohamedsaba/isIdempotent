@@ -14,7 +14,7 @@ A production-grade idempotency library for NestJS. This package provides a decla
 ## Installation
 
 ```bash
-npm install @nestjs-idempotency/core ioredis
+npm i @mohamedsaba/idempotent
 ```
 
 ## Quick Start
