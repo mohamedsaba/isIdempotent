@@ -22,7 +22,7 @@ npm i @mohamedsaba/idempotent
 ### 1. Register the Module
 
 ```typescript
-import { IdempotencyModule } from '@nestjs-idempotency/core';
+import { IdempotencyModule } from '@mohamedsaba/idempotent';
 import { Redis } from 'ioredis';
 
 @Module({
@@ -45,7 +45,7 @@ export class AppModule {}
 Add the `@Idempotent()` decorator to any controller method that requires idempotency protection.
 
 ```typescript
-import { Idempotent } from '@nestjs-idempotency/core';
+import { Idempotent } from '@mohamedsaba/idempotent';
 
 @Controller('orders')
 export class OrderController {
@@ -76,6 +76,13 @@ export class OrderController {
 3. **Lock**: If no response is found, it attempts to acquire an atomic `IN_PROGRESS` lock. If another request is already processing the same key, it returns a `409 Conflict`.
 4. **Execute**: The controller logic runs.
 5. **Save**: The response is hashed and saved to the store, and the lock is released.
+
+## Production Recommendations
+
+1. **Storage**: Always use `RedisStore` in production. `MemoryStore` is intended for local development and does not support distributed environments.
+2. **TTL**: Set a reasonable `ttl` for your use case. 24 hours is often a safe default, but consider your business logic (e.g., payment windows).
+3. **Fail-Open Strategy**: If your application *must* remain available even if Redis is down, set `storageFailureStrategy: 'fail-open'`. Be aware that this temporarily disables idempotency protection.
+4. **Header Safety**: The library automatically filters sensitive headers like `set-cookie`, but ensure any custom headers you return are also safe to cache.
 
 ## License
 

@@ -1,4 +1,4 @@
-# Architecture & Design Decisions: `nestjs-idempotency`
+# Architecture & Design Decisions: `@mohamedsaba/idempotent`
 
 ## 1. System Philosophy
 This library was extracted from a high-performance, distributed Webhook Engine. It is designed to solve a fundamental distributed systems problem — network instability and client retry storms — without polluting core domain logic.

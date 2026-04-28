@@ -1,5 +1,5 @@
 {
-  "name": "@nestjs-idempotency/core",
+  "name": "@mohamedsaba/idempotent",
   "version": "1.0.0",
   "description": "Distributed idempotency protection for NestJS",
   "main": "dist/index.js",
@@ -7,6 +7,13 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "engines": {
     "node": ">=18.0.0"
   },
@@ -33,9 +40,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/mohamedsaba/isIdempotent"
   },
-  "homepage": "",
+  "homepage": "https://github.com/mohamedsaba/isIdempotent#readme",
   "peerDependencies": {
     "@nestjs/common": "^10.0.0 || ^11.0.0",
     "@nestjs/core": "^10.0.0 || ^11.0.0",
