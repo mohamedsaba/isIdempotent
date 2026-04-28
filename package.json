@@ -1,6 +1,6 @@
 {
   "name": "@mohamedsaba/idempotent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Distributed idempotency protection for NestJS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
