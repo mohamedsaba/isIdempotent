@@ -4,10 +4,11 @@ A production-grade idempotency library for NestJS. This package provides a decla
 
 ## Features
 
-- **Distributed Locking**: Uses Redis with atomic operations (Lua scripts) to prevent race conditions across multiple server instances.
-- **Request Fingerprinting**: Automatically generates a unique hash of the request body to prevent key collisions when the same idempotency key is used with different data.
-- **Pluggable Storage**: Includes a high-performance in-memory store for local development and a Redis store for production.
-- **Safety Limits**: Built-in protection against storage exhaustion with configurable body size limits and status code filtering.
+- **Distributed Locking & Fencing Tokens**: Uses Redis with atomic Lua scripts to prevent race conditions and "lock hijacking," ensuring strict ownership of idempotency keys.
+- **Robust Fingerprinting**: Cycle-safe, type-aware hashing of request payloads to prevent key collisions when different data is sent with the same key.
+- **Automatic Stream Detection**: Gracefully handles `StreamableFile`, `Buffer`, and response streams by bypassing the cache to avoid data corruption.
+- **Pluggable Storage**: Includes a high-performance in-memory store for local development and an enterprise-grade Redis store for production.
+- **Safety Limits**: Protection against storage exhaustion with configurable body size limits and status code filtering.
 - **Observability**: Standardized logging for cache hits, conflicts, and storage health.
 - **Tenant Isolation**: Optional namespacing to keep idempotency keys unique across different users or tenants.
 

@@ -1,6 +1,7 @@
 export * from './constants';
 export * from './idempotency.module';
 export * from './idempotency.interceptor';
+export * from './idempotency.events';
 export * from './decorators/idempotent.decorator';
 export * from './interfaces/idempotency-options.interface';
 export * from './stores/idempotency.store';

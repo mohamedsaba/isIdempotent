@@ -54,6 +54,13 @@ export interface IdempotencyOptions {
    * @default [200, 201, 202, 204]
    */
   cacheableStatuses?: number[];
+
+  /**
+   * Whether to include the HTTP method and path in the idempotency key.
+   * Prevents collisions if the same key is used across different endpoints.
+   * @default true
+   */
+  enforceKeyIsolation?: boolean;
 }
 
 export interface ResponseRecord {

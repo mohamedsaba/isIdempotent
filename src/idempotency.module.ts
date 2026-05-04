@@ -6,6 +6,8 @@ import { IDEMPOTENCY_OPTIONS } from './constants';
 import { IdempotencyStore } from './stores/idempotency.store';
 import { MemoryStore } from './stores/memory.store';
 
+import { IdempotencyEventEmitter } from './idempotency.events';
+
 @Global()
 @Module({})
 export class IdempotencyModule {
@@ -26,12 +28,13 @@ export class IdempotencyModule {
         optionsProvider,
         storeProvider,
         IdempotencyInterceptor,
+        IdempotencyEventEmitter,
         {
           provide: APP_INTERCEPTOR,
-          useClass: IdempotencyInterceptor,
+          useExisting: IdempotencyInterceptor,
         },
       ],
-      exports: [IdempotencyStore, IdempotencyInterceptor, IDEMPOTENCY_OPTIONS],
+      exports: [IdempotencyStore, IdempotencyInterceptor, IDEMPOTENCY_OPTIONS, IdempotencyEventEmitter],
     };
   }
 
@@ -57,12 +60,13 @@ export class IdempotencyModule {
         optionsProvider,
         storeProvider,
         IdempotencyInterceptor,
+        IdempotencyEventEmitter,
         {
           provide: APP_INTERCEPTOR,
-          useClass: IdempotencyInterceptor,
+          useExisting: IdempotencyInterceptor,
         },
       ],
-      exports: [IdempotencyStore, IdempotencyInterceptor, IDEMPOTENCY_OPTIONS],
+      exports: [IdempotencyStore, IdempotencyInterceptor, IDEMPOTENCY_OPTIONS, IdempotencyEventEmitter],
     };
   }
 }

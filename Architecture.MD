@@ -27,10 +27,10 @@ An abstract class defining a strict contract:
 
 ```typescript
 export abstract class IdempotencyStore {
-  abstract setInProgress(key: string): Promise<boolean>;
-  abstract saveResponse(key: string, response: ResponseRecord, ttl: number): Promise<void>;
-  abstract getResponse(key: string): Promise<ResponseRecord | null>;
-  abstract clear(key: string): Promise<void>;
+  abstract setInProgress(key: string, ttl: number, token: string): Promise<boolean>;
+  abstract saveResponse(key: string, response: ResponseRecord, ttl: number, token: string): Promise<void>;
+  abstract getResponse(key: string): Promise<ResponseRecord | string | null>;
+  abstract clear(key: string, token?: string): Promise<void>;
 }
 ```
 
@@ -105,7 +105,10 @@ If the Redis connection is lost, the `RedisStore` should either:
 The chosen strategy is configurable at the module level. The default is fail-closed to prevent duplicate side effects.
 
 ### E. Fingerprint Mismatch
-If a client reuses the same idempotency key with a different request body, the interceptor should detect the mismatch (via body hash comparison) and return a `422 Unprocessable Entity` to prevent accidental key collisions.
+If a client reuses the same idempotency key with a different request body, the interceptor detects the mismatch via a robust, cycle-safe hashing algorithm and returns a `422 Unprocessable Entity` to prevent accidental key collisions.
+
+### F. Lock Hijacking (Fencing Tokens)
+If Request A's lock expires before it finishes, and Request B starts with the same key, Request A is prevented from overwriting Request B's state. This is achieved by generating a unique **Fencing Token** for every request and verifying it in the `saveResponse` and `clear` operations.
 
 ---
 
